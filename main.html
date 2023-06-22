@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-
 <html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <!-- the entire body must be written by student -->
+<head>
+    <title>Promise Example</title>
+    <script src="script.js"></script>
+</head>
+<body>
     <div id="output"></div>
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    <script>
+        // Array of promises with random durations between 1 and 5 seconds
+        const promises = [
+            delay(1000),
+            delay(2000),
+            delay(3000),
+            delay(4000),
+            delay(5000)
+        ];
+
+        // Helper function to create a promise that resolves after a given duration
+        function delay(duration) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(duration);
+                }, duration);
+            });
+        }
+
+        // Use Promise.any() to wait for the first promise to resolve
+        Promise.any(promises)
+            .then(result => {
+                // Print the result to the output div
+                const outputDiv = document.getElementById('output');
+                outputDiv.textContent = `Resolved with ${result} milliseconds.`;
+            })
+            .catch(error => {
+                // Handle error if no promises resolve
+                console.error('No promises resolved:', error);
+            });
+    </script>
+</body>
 </html>
